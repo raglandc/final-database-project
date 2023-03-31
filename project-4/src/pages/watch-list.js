@@ -4,7 +4,11 @@ export default function WatchList()
 {
   return (
     <Layout>
-      <h1>watch list</h1>
+      <main className="h-screen w-full">
+        <section className="w-8/12">
+          <h1>test</h1>
+        </section>
+      </main>
     </Layout>
   )
 }
