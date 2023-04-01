@@ -11,7 +11,7 @@ export default function NavBar()
           </div>
         </Link>
         <div>
-          <Link href="/watch-list" className="bg-teal-300 text-black px-3 py-1 rounded-sm hover:cursor-pointer hover:bg-teal-400">
+          <Link href="/watch-list" className="bg-teal-600 px-3 py-1 rounded-sm hover:cursor-pointer hover:bg-teal-500">
             My Watch List
           </Link>
           <Link href="/login" className="px-3 py-1 hover:underline hover:cursor-pointer">
