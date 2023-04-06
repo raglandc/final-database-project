@@ -1,21 +1,8 @@
 import Layout from '@/components/Layout'
 import SideBar from '@/components/SideBar'
 import Head from 'next/head'
+import prisma from '../lib/prisma';
 
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
-async function main() {
-    // ... you will write your Prisma Client queries here
-}
-main()
-    .then(async () => {
-        await prisma.$disconnect()
-    })
-    .catch(async (e) => {
-        console.error(e)
-        await prisma.$disconnect()
-        process.exit(1)
-    })
 export default function Home() {
   return (
     <>
@@ -37,4 +24,13 @@ export default function Home() {
       </Layout>
     </>
   )
+}
+export const getServerSideProps = async () => {
+    const feed = await prisma.post.findMany({
+        where: { published: true },
+        include: { author: true },
+    })
+    return {
+        props: { feed },
+    }
 }

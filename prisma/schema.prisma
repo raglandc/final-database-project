@@ -10,21 +10,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(sequence())
-  email String  @unique
-  name  String?
-  posts Post[]
-}
-
 model Post {
-  id        Int      @id @default(sequence())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String
+  id        BigInt   @id @default(sequence())
+  title     String   @unique @db.String(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
   content   String?
   published Boolean  @default(false)
-  viewCount Int      @default(0)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  authorId  BigInt
+  author    User     @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Profile {
+  id     BigInt  @id @default(sequence())
+  bio    String?
+  userId BigInt  @unique
+  user   User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model User {
+  id      BigInt   @id @default(sequence())
+  name    String?  @db.String(255)
+  email   String   @unique @db.String(255)
+  posts   Post[]
+  profile Profile?
 }
