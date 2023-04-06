@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
       <Layout>
         <main className='grid grid-cols-12 gap-4'>
-          <aside className='col-span-3 bg-teal-700 h-screen'>
+          <aside className='col-span-3 h-screen bg-teal-800'>
             <SideBar/>
           </aside>
           <section className='col-start-4 col-end-13'>

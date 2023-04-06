@@ -8,7 +8,7 @@ export default function Layout({children})
     <>
       <NavBar />
         {children}
-      <footer className="text-white flex flex-col items-center justify-center bg-teal-900 h-32">
+      <footer className="text-white flex flex-col bg-teal-900 items-center justify-center h-32">
         <p>&copy; Bulls Movies {year}</p>
       </footer>
     </>
