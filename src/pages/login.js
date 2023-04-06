@@ -1,3 +1,5 @@
+import prisma from '../../lib/prisma';
+
 export default function Login()
 {
   return (
@@ -10,4 +12,14 @@ export default function Login()
       <div className="h-screen bg-login-hero-image w-2/4 bg-cover opacity-80" />
     </div>
   )
+}
+
+export const getServerSideProps = async () => {
+  const feed = await prisma.post.findMany({
+      where: { published: true },
+      include: { author: true },
+  })
+  return {
+      props: { feed },
+  }
 }
