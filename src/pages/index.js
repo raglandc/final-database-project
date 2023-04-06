@@ -1,6 +1,7 @@
 import Layout from '@/components/Layout'
 import SideBar from '@/components/SideBar'
 import Head from 'next/head'
+import prisma from '../../lib/prisma';
 
 export default function Home() {
   return (
@@ -23,4 +24,13 @@ export default function Home() {
       </Layout>
     </>
   )
+}
+export const getServerSideProps = async () => {
+    const feed = await prisma.post.findMany({
+        where: { published: true },
+        include: { author: true },
+    })
+    return {
+        props: { feed },
+    }
 }
