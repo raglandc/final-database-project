@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import SideBar from '@/components/SideBar'
 import Head from 'next/head'
-import prisma from '../lib/prisma';
+import prisma from '../../lib/prisma';
 
 export default function Home() {
   return (
