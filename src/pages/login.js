@@ -16,7 +16,7 @@ export default function Login()
           Login / Sign up
         </button>      
         </div>
-      <div className="h-screen bg-login-hero-image w-2/4 bg-cover opacity-80" />
+      <div className="h-screen bg-login-hero-image w-2/4 bg-cover opacity-60" />
     </div>
   )
 }
