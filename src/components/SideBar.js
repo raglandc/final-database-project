@@ -25,7 +25,7 @@ export default function SideBar()
           <option>⭐️⭐️⭐️⭐️</option>
           <option>⭐️⭐️⭐️⭐️⭐️</option>
         </select>
-        <button className="my-3 p-3 hover:bg-green-500 bg-green-600 rounded-sm  shadow-md">Search</button>
+        <button className="my-3 p-3 hover:bg-green-600 bg-green-500 border-2 rounded-md">Search</button>
       </form>
     </div>
   )

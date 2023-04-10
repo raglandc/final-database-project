@@ -8,9 +8,7 @@ export default function NavBar()
     <div className="w-screen h-16 bg-teal-900 text-white">
       <div className="flex h-full m-auto items-center justify-between w-9/12">
         <Link href="/" className="hover:text-green-500">
-          <div>
             Bulls🍿Movies
-          </div>
         </Link>
         <div className="flex items-center h-full">
           <NavLink link="/watch-list" title="Watch List" />
