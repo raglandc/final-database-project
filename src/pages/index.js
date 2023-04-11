@@ -3,7 +3,7 @@ import SideBar from '@/components/SideBar'
 import Head from 'next/head'
 import prisma from '../../lib/prisma';
 
-export default function Home() {
+export default function Home({movies}) {
   return (
     <>
       <Head>
@@ -18,19 +18,30 @@ export default function Home() {
             <SideBar/>
           </aside>
           <section className='col-start-4 col-end-13'>
-            main
+            <div>
+              {movies.map((movie) => {
+                return <p key={movie.MoviesID}>{movie.M_title}</p>
+              })}
+            </div>
           </section>
         </main>
       </Layout>
     </>
   )
 }
-// export const getServerSideProps = async () => {
-//     const feed = await prisma.post.findMany({
-//         where: { published: true },
-//         include: { author: true },
-//     })
-//     return {
-//         props: { feed },
-//     }
-// }
+
+export async function getServerSideProps()
+{
+  const movies = await prisma.movies.findMany({
+    where: {
+      MoviesID: {lte: 10}
+    }
+  });
+  console.log(JSON.parse(JSON.stringify(movies)));
+
+  return {
+    props: { 
+      movies: JSON.parse(JSON.stringify(movies)), 
+    }
+  }
+}
