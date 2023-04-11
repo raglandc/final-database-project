@@ -14,8 +14,8 @@ model Movies {
   MoviesID     Int     @id //@default(cuid())
   M_title      String
   M_overview   String?
-  m_popularity Decimal @default(0.00)
-  m_voteAvg    Decimal @default(0.00)
+  m_popularity Decimal @default(0.00) @db.Decimal(10, 3)
+  m_voteAvg    Decimal @default(0.00) @db.Decimal(10, 3)
   m_voteCount  Int     @default(0)
 }
 
