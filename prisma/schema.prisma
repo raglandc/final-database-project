@@ -10,13 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        String  @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+model Movies {
+  MoviesID     Int     @id //@default(cuid())
+  M_title      String
+  M_overview   String?
+  m_popularity Decimal @default(0.00)
+  m_voteAvg    Decimal @default(0.00)
+  m_voteCount  Int     @default(0)
 }
 
 model Account {
@@ -54,7 +54,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Post          Post[]
 }
 
 model VerificationToken {
@@ -63,4 +62,84 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model actors {
+  id         Int     @id @default(0)
+  first_name String? @db.String()
+  last_name  String? @db.String()
+  gender     String? @db.Char(1)
+  roles      roles[]
+
+  // CockroachDB-specific annotations
+  @@index([first_name], name: "actors_first_name")
+  @@index([last_name], name: "actors_last_name")
+}
+
+model directors {
+  id               Int                @id @default(0)
+  first_name       String?            @db.String()
+  last_name        String?            @db.String()
+  directors_genres directors_genres[]
+  movies_directors movies_directors[]
+
+  @@index([first_name], name: "directors_first_name")
+  @@index([last_name], name: "directors_last_name")
+}
+
+model directors_genres {
+  director_id Int
+  genre       String
+  prob        Float?
+  director    directors @relation(fields: [director_id], references: [id])
+
+  @@id([director_id, genre])
+  @@index([director_id], name: "directors_genres_director_id")
+}
+
+model movies {
+  id               Int                @id
+  name             String?
+  year             Int?
+  rank             Float?
+  movies_directors movies_directors[]
+  movies_genres    movies_genres[]
+  roles            roles[]
+
+  @@index([name], name: "movies_name")
+}
+
+model movies_directors {
+  director_id Int
+  movie_id    Int
+
+  director directors @relation(fields: [director_id], references: [id])
+  movie    movies    @relation(fields: [movie_id], references: [id])
+
+  @@id([director_id, movie_id])
+  @@index([director_id], name: "movies_directors_director_id")
+  @@index([movie_id], name: "movies_directors_movie_id")
+}
+
+model movies_genres {
+  movie_id Int
+  genre    String
+
+  movie movies @relation(fields: [movie_id], references: [id])
+
+  @@id([movie_id, genre])
+  @@index([movie_id], name: "movies_genres_movie_id")
+}
+
+model roles {
+  actor_id Int
+  movie_id Int
+  role     String
+
+  actor actors @relation(fields: [actor_id], references: [id])
+  movie movies @relation(fields: [movie_id], references: [id])
+
+  @@id([actor_id, movie_id, role])
+  @@index([actor_id], name: "roles_actor_id")
+  @@index([movie_id], name: "roles_movie_id")
 }
