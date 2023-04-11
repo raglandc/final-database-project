@@ -1,5 +1,4 @@
 import { signIn } from 'next-auth/react';
-import prisma from '../../lib/prisma';
 
 export default function Login()
 {
@@ -19,14 +18,4 @@ export default function Login()
       <div className="h-screen bg-login-hero-image w-2/4 bg-cover opacity-60" />
     </div>
   )
-}
-
-export const getServerSideProps = async () => {
-  const feed = await prisma.post.findMany({
-      where: { published: true },
-      include: { author: true },
-  })
-  return {
-      props: { feed },
-  }
 }

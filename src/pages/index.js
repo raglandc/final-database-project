@@ -25,12 +25,12 @@ export default function Home() {
     </>
   )
 }
-export const getServerSideProps = async () => {
-    const feed = await prisma.post.findMany({
-        where: { published: true },
-        include: { author: true },
-    })
-    return {
-        props: { feed },
-    }
-}
+// export const getServerSideProps = async () => {
+//     const feed = await prisma.post.findMany({
+//         where: { published: true },
+//         include: { author: true },
+//     })
+//     return {
+//         props: { feed },
+//     }
+// }
