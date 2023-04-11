@@ -1,72 +1,83 @@
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
+const fs = require('fs');
 
-const prisma = new PrismaClient()
+// Instantiate PrismaClient
+const prisma = new PrismaClient();
 
-const userData = [
-    {
-        name: 'Alice',
-        email: 'alice@prisma.io',
-        posts: {
-            create: [
-                {
-                    title: 'Join the Prisma Slack',
-                    content: 'https://slack.prisma.io',
-                    published: true,
-                },
-            ],
-        },
-    },
-    {
-        name: 'Nilu',
-        email: 'nilu@prisma.io',
-        posts: {
-            create: [
-                {
-                    title: 'Follow Prisma on Twitter',
-                    content: 'https://www.twitter.com/prisma',
-                    published: true,
-                    viewCount: 42,
-                },
-            ],
-        },
-    },
-    {
-        name: 'Mahmoud',
-        email: 'mahmoud@prisma.io',
-        posts: {
-            create: [
-                {
-                    title: 'Ask a question about Prisma on GitHub',
-                    content: 'https://www.github.com/prisma/prisma/discussions',
-                    published: true,
-                    viewCount: 128,
-                },
-                {
-                    title: 'Prisma on YouTube',
-                    content: 'https://pris.ly/youtube',
-                },
-            ],
-        },
-    },
-]
+async function importData() {
+    try {
+        // Connect to Prisma database
+        await prisma.$connect();
 
-async function main() {
-    console.log(`Start seeding ...`)
-    for (const u of userData) {
-        const user = await prisma.user.create({
-            data: u,
-        })
-        console.log(`Created user with id: ${user.id}`)
+        // Import data for title_basics
+        await importTitleBasics();
+
+        // Import data for title_ratings
+        await importTitleRatings();
+
+        // Add more import functions for other tables as needed
+
+        console.log('Data imported successfully!');
+    } catch (error) {
+        console.error(`Failed to import data: ${error}`);
+    } finally {
+        // Disconnect from Prisma database
+        await prisma.$disconnect();
     }
-    console.log(`Seeding finished.`)
 }
 
-main()
-    .then(async () => {
-        await prisma.$disconnect()
-    })
-    .catch(async (e) => {
-        console.error(e)
-        await prisma.$disconnect()
-        process.exit(1)
-    })
+async function importTitleBasics() {
+    // Read data from title_basics.tsv file
+    const data = fs.readFileSync('./data.tsv', 'utf-8');
+    const rows = data.trim().split('\n');
+    const headers = rows.shift().split('\t');
+
+    // Insert data into title_basics model
+    for (const row of rows) {
+        const values = row.split('\t');
+        const item = headers.reduce((acc, header, index) => {
+            acc[header] = values[index];
+            return acc;
+        }, {});
+
+        await prisma.title_basics.create({
+            data: {
+                tconst: item.tconst,
+                titleType: item.titleType,
+                primaryTitle: item.primaryTitle,
+                originalTitle: item.originalTitle,
+                isAdult: item.isAdult,
+                startYear: item.startYear,
+                endYear: item.endYear,
+                runtimeMinutes: item.runtimeMinutes,
+                genres: item.genres,
+            },
+        });
+    }
+}
+
+// async function importTitleRatings() {
+//     // Read data from title_ratings.tsv file
+//     const data = fs.readFileSync('./title_ratings.tsv', 'utf-8');
+//     const rows = data.trim().split('\n');
+//     const headers = rows.shift().split('\t');
+//
+//     // Insert data into title_ratings model
+//     for (const row of rows) {
+//         const values = row.split('\t');
+//         const item = headers.reduce((acc, header, index) => {
+//             acc[header] = values[index];
+//             return acc;
+//         }, {});
+//
+//         await prisma.title_ratings.create({
+//             data: {
+//                 tconst: item.tconst,
+//                 averageRating: parseFloat(item.averageRating),
+//                 numVotes: parseInt(item.numVotes),
+//             },
+//         });
+//     }
+// }
+
+importData();

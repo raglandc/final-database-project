@@ -10,13 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        String  @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+model Movies {
+  MoviesID     Int     @id //@default(cuid())
+  M_title      String
+  M_overview   String?
+  m_popularity Decimal @default(0.00) @db.Decimal(10, 3)
+  m_voteAvg    Decimal @default(0.00) @db.Decimal(10, 3)
+  m_voteCount  Int     @default(0)
 }
 
 model Account {
@@ -54,7 +54,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Post          Post[]
 }
 
 model VerificationToken {
