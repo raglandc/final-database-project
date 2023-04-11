@@ -64,82 +64,78 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model actors {
-  id         Int     @id @default(0)
-  first_name String? @db.String()
-  last_name  String? @db.String()
-  gender     String? @db.Char(1)
-  roles      roles[]
+model title_akas {
+  titleId         String
+  ordering        Int
+  title           String
+  region          String
+  language        String
+  types           String[]
+  attributes      String[]
+  isOriginalTitle Boolean
 
-  // CockroachDB-specific annotations
-  @@index([first_name], name: "actors_first_name")
-  @@index([last_name], name: "actors_last_name")
+  @@id([titleId, ordering])
 }
 
-model directors {
-  id               Int                @id @default(0)
-  first_name       String?            @db.String()
-  last_name        String?            @db.String()
-  directors_genres directors_genres[]
-  movies_directors movies_directors[]
+model title_basics {
+  tconst         String
+  titleType      String
+  primaryTitle   String
+  originalTitle  String
+  isAdult        Boolean
+  startYear      Int?
+  endYear        Int?
+  runtimeMinutes Int?
+  genres         String[]
 
-  @@index([first_name], name: "directors_first_name")
-  @@index([last_name], name: "directors_last_name")
+  @@id([tconst])
 }
 
-model directors_genres {
-  director_id Int
-  genre       String
-  prob        Float?
-  director    directors @relation(fields: [director_id], references: [id])
+model title_crew {
+  tconst    String
+  directors String[]
+  writers   String[]
 
-  @@id([director_id, genre])
-  @@index([director_id], name: "directors_genres_director_id")
+  @@id([tconst])
 }
 
-model movies {
-  id               Int                @id
-  name             String?
-  year             Int?
-  rank             Float?
-  movies_directors movies_directors[]
-  movies_genres    movies_genres[]
-  roles            roles[]
+model title_episode {
+  tconst        String
+  parentTconst  String
+  seasonNumber  Int
+  episodeNumber Int
 
-  @@index([name], name: "movies_name")
+  @@id([tconst])
+  @@unique([parentTconst, seasonNumber, episodeNumber])
 }
 
-model movies_directors {
-  director_id Int
-  movie_id    Int
+model title_principal {
+  tconst     String
+  ordering   Int
+  nconst     String
+  category   String
+  job        String?
+  characters String?
 
-  director directors @relation(fields: [director_id], references: [id])
-  movie    movies    @relation(fields: [movie_id], references: [id])
-
-  @@id([director_id, movie_id])
-  @@index([director_id], name: "movies_directors_director_id")
-  @@index([movie_id], name: "movies_directors_movie_id")
+  @@id([tconst, ordering])
+  @@unique([nconst])
 }
 
-model movies_genres {
-  movie_id Int
-  genre    String
+model title_rating {
+  tconst        String
+  averageRating Float
+  numVotes      Int
 
-  movie movies @relation(fields: [movie_id], references: [id])
-
-  @@id([movie_id, genre])
-  @@index([movie_id], name: "movies_genres_movie_id")
+  @@id([tconst])
 }
 
-model roles {
-  actor_id Int
-  movie_id Int
-  role     String
+model person {
+  nconst            String
+  primaryName       String
+  birthYear         Int?
+  deathYear         Int?
+  primaryProfession String[]
+  knownForTitles    String[]
 
-  actor actors @relation(fields: [actor_id], references: [id])
-  movie movies @relation(fields: [movie_id], references: [id])
-
-  @@id([actor_id, movie_id, role])
-  @@index([actor_id], name: "roles_actor_id")
-  @@index([movie_id], name: "roles_movie_id")
+  @@id([nconst])
 }
