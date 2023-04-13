@@ -56,28 +56,5 @@ async function importTitleBasics() {
     }
 }
 
-// async function importTitleRatings() {
-//     // Read data from title_ratings.tsv file
-//     const data = fs.readFileSync('./title_ratings.tsv', 'utf-8');
-//     const rows = data.trim().split('\n');
-//     const headers = rows.shift().split('\t');
-//
-//     // Insert data into title_ratings model
-//     for (const row of rows) {
-//         const values = row.split('\t');
-//         const item = headers.reduce((acc, header, index) => {
-//             acc[header] = values[index];
-//             return acc;
-//         }, {});
-//
-//         await prisma.title_ratings.create({
-//             data: {
-//                 tconst: item.tconst,
-//                 averageRating: parseFloat(item.averageRating),
-//                 numVotes: parseInt(item.numVotes),
-//             },
-//         });
-//     }
-// }
 
 importData();
