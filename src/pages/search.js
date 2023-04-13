@@ -49,6 +49,9 @@ export default function Search({movies}) {
 export async function getServerSideProps()
 {
   const movies = await prisma.movies.findMany({
+    orderBy: {
+      
+    },
     where: {
       MoviesID: {lte: 4}
     }
