@@ -11,12 +11,22 @@ datasource db {
 }
 
 model Movies {
-  MoviesID     Int     @id //@default(cuid())
-  M_title      String
-  M_overview   String?
-  m_popularity Decimal @default(0.00) @db.Decimal(10, 3)
-  m_voteAvg    Decimal @default(0.00) @db.Decimal(10, 3)
-  m_voteCount  Int     @default(0)
+  MoviesID      String   @id @default(cuid())
+  Poster_Link   String
+  M_title       String
+  Released_Year Int
+  Certificate   String?
+  Runtime       Int
+  Genre         String[]
+  IMDB_Rating   Decimal  @default(0.00) @db.Decimal(10, 2)
+  M_overview    String?
+  Meta_score    Int?
+  Director      String
+  Star1         String
+  Star2         String
+  Star3         String
+  m_voteCount   Int      @default(0)
+  Gross         Int?
 }
 
 model Account {
