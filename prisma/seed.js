@@ -1,83 +1,39 @@
 const { PrismaClient } = require('@prisma/client');
 const fs = require('fs');
 
-// Instantiate PrismaClient
 const prisma = new PrismaClient();
 
-async function importData() {
-    try {
-        // Connect to Prisma database
-        await prisma.$connect();
+// Read the .csv file
+const fileContents = fs.readFileSync('movies.csv', 'utf-8');
 
-        // Import data for title_basics
-        await importTitleBasics();
+// Parse the contents of the .csv file
+const lines = fileContents.split('\n');
 
-        // Import data for title_ratings
-        await importTitleRatings();
+// Loop through the parsed data and insert into the Movies model
+for (const line of lines) {
+    const [posterLink, title, year, certificate, runtime, genre, imdbRating, overview, metaScore, director, star1, star2, star3, star4, voteCount, gross] = line.split(',');
 
-        // Add more import functions for other tables as needed
+    const movieData = {
+        Poster_Link: posterLink,
+        M_title: title,
+        Released_Year: parseInt(year),
+        Certificate: certificate,
+        Runtime: parseInt(runtime),
+        Genre: genre.split(','), // Split genre by comma to create an array
+        IMDB_Rating: parseFloat(imdbRating),
+        M_overview: overview,
+        Meta_score: metaScore ? parseInt(metaScore) : null,
+        Director: director,
+        Star1: star1,
+        Star2: star2,
+        Star3: star3,
+        Star4: star4,
+        m_voteCount: parseInt(voteCount),
+        Gross: gross ? parseInt(gross) : null,
+    };
 
-        console.log('Data imported successfully!');
-    } catch (error) {
-        console.error(`Failed to import data: ${error}`);
-    } finally {
-        // Disconnect from Prisma database
-        await prisma.$disconnect();
-    }
+    prisma.movies.create({ data: movieData })
+        .catch(error => console.error(error));
 }
 
-async function importTitleBasics() {
-    // Read data from title_basics.tsv file
-    const data = fs.readFileSync('./data.tsv', 'utf-8');
-    const rows = data.trim().split('\n');
-    const headers = rows.shift().split('\t');
-
-    // Insert data into title_basics model
-    for (const row of rows) {
-        const values = row.split('\t');
-        const item = headers.reduce((acc, header, index) => {
-            acc[header] = values[index];
-            return acc;
-        }, {});
-
-        await prisma.title_basics.create({
-            data: {
-                tconst: item.tconst,
-                titleType: item.titleType,
-                primaryTitle: item.primaryTitle,
-                originalTitle: item.originalTitle,
-                isAdult: item.isAdult,
-                startYear: item.startYear,
-                endYear: item.endYear,
-                runtimeMinutes: item.runtimeMinutes,
-                genres: item.genres,
-            },
-        });
-    }
-}
-
-// async function importTitleRatings() {
-//     // Read data from title_ratings.tsv file
-//     const data = fs.readFileSync('./title_ratings.tsv', 'utf-8');
-//     const rows = data.trim().split('\n');
-//     const headers = rows.shift().split('\t');
-//
-//     // Insert data into title_ratings model
-//     for (const row of rows) {
-//         const values = row.split('\t');
-//         const item = headers.reduce((acc, header, index) => {
-//             acc[header] = values[index];
-//             return acc;
-//         }, {});
-//
-//         await prisma.title_ratings.create({
-//             data: {
-//                 tconst: item.tconst,
-//                 averageRating: parseFloat(item.averageRating),
-//                 numVotes: parseInt(item.numVotes),
-//             },
-//         });
-//     }
-// }
-
-importData();
+console.log('Data seeding complete!');
