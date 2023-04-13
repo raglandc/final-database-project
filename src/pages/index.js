@@ -9,7 +9,7 @@ export default function Login()
         <p className="my-5 text-stone-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quidem itaque ab harum aliquam ex assumenda natus aspernatur debitis laborum. Quos dicta et at molestiae amet exercitationem dignissimos deleniti eligendi.</p>
 
         <button 
-          onClick={() => signIn(undefined, {callbackUrl: "/dashboard"})}
+          onClick={() => signIn(undefined, {callbackUrl: "/search"})}
           className="text-white px-3 py-2 bg-teal-600 rounded-md shadow-sm hover:bg-teal-500 hover:scale-105 active:scale-95"
           >
           Login / Sign up
