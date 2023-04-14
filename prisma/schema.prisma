@@ -42,6 +42,7 @@ model UserLikes {
   // relation to the other tables
   user    User     @relation(fields: [userId], references: [id])
   movie   Movies   @relation(fields: [movieId], references: [MoviesID])
+
   // Composite primary key
   @@id([userId, movieId])
 }
