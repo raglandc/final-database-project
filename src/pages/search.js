@@ -1,14 +1,38 @@
 import { useSession } from 'next-auth/react';
+import { useState, useEffect } from "react"
 
 import Layout from '@/components/Layout'
-import SideBar from '@/components/SideBar'
 import MovieCard from '@/components/MovieCard';
 import Head from 'next/head'
-import prisma from '../../lib/prisma';
 
-export default function Search({movies}) {
+export default function Search() {
   const { data : session } = useSession();
 
+  //form data
+  const [title, setTitle] = useState("");
+  const [year, setYear] = useState("");
+  const [genre, setGenre] = useState("");
+  const [rating, setRating] = useState(5.0);
+  const [movies, setMovies] = useState([]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const response = await fetch("/api/get-movies", {
+      method: "POST",
+      body: JSON.stringify({title, year, rating, genre}),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+
+    const { movies } = await response.json();
+    console.log(movies);
+    setMovies(movies);
+  }
+
+  console.log(movies);
+  
   if (session) {
     return (
       <>
@@ -21,19 +45,79 @@ export default function Search({movies}) {
         <Layout>
           <main className='grid grid-cols-12 gap-4 min-h-screen'>
             <aside className='col-span-3 xl:col-span-2 h-full bg-teal-800'>
-              <SideBar/>
+            <div className="w-11/12 mx-auto mt-8 text-white">
+              <form 
+                  onSubmit={handleSubmit}
+                  className="flex flex-col rounded-md px-5 py-5 m-auto"
+              > 
+                <h2 className="text-4xl my-3">Search</h2>
+
+                
+                <label htmlFor="title" className="mt-1 text-white">Title</label>
+                <input 
+                  value={title} onChange={(e) => setTitle(e.target.value)}
+                  type="text" 
+                  id="title" 
+                  placeholder="Title" 
+                  className="bg-transparent text-white border-b-4 my-1 p-3 rounded-sm hover:border-green-600 hover:cursor-pointer"
+                />
+
+                <label htmlFor="year" className="mt-1 ">Year</label>
+                <input
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  type="text"
+                  id="year"
+                  placeholder="Year"
+                  className="my-1 bg-transparent hover:cursor-pointer border-b-4 p-3 rounded-sm hover:border-green-600"
+                />
+
+                <label htmlFor="Genre" className="mt-1 ">Genre</label>
+                <select
+                  value={genre}
+                  onChange={(e) => setGenre(e.target.value)}
+                  id="genre"
+                  
+                  className="my-1 bg-transparent hover:cursor-pointer border-b-4 p-3 rounded-sm hover:border-green-600"
+                >
+                  <option value="Action">Action</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Animation">Animation</option>
+                  <option value="Comedy">Comedy</option>
+                  <option value="Drama">Drama</option>
+                  <option value="Family">Family</option>
+                  <option value="Mystery">Mystery</option>
+                  <option value="Thriller">Thriller</option>
+                  <option value="War">War</option>
+                </select>
+
+                <label className="mt-1" htmlFor="rating">Rating: {rating}</label>
+                <input
+                  className='my-3'
+                  id='rating'
+                  type="range"
+                  min="1.0"
+                  max="10.0"
+                  step="0.1"
+                  value={rating}
+                  onChange={(e) => setRating(parseFloat(e.target.value))}
+                />
+
+                <button type='submit' className="my-3 p-3 hover:bg-green-600 bg-green-500 border-2 rounded-md">Search</button>
+              </form>
+            </div>
             </aside>
             <section className='col-start-4 xl:col-start-3 col-end-13 mr-4'>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {/* {movies.map((movie) => {
+                {movies.length > 0 ? movies.map((movie) => {
                   return <MovieCard 
-                          key={movie.MoviesID} 
-                          title={movie.M_title}
-                          overview={movie.M_overview}
-                          rating={movie.m_voteAvg}
-                          image={movie.Poster_Link}
+                            key={movie.MoviesID} 
+                            title={movie.M_title}
+                            rating={movie.m_voteAvg}
+                            image={movie.Poster_Link}
                           />
-                })} */}
+                  }) : <p>No movies found. Try searching something else</p>
+                }
               </div>
             </section>
           </main>
