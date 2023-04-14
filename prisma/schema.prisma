@@ -11,23 +11,52 @@ datasource db {
 }
 
 model Movies {
-  MoviesID      String   @id @unique @default(cuid())
-  Poster_Link   String
-  M_title       String
-  Released_Year Int?
-  Certificate   String?
-  Runtime       Int
-  Genre         String[]
-  IMDB_Rating   Decimal  @default(0.00) @db.Decimal(10, 2)
-  M_overview    String?
-  Meta_score    Int?
-  Director      String
-  Star1         String
-  Star2         String
-  Star3         String
-  Star4         String
-  m_voteCount   Int      @default(0)
-  Gross         Int?
+  // primary key
+  MoviesID String @id @unique @default(cuid())
+
+  Poster_Link    String
+  M_title        String
+  Released_Year  Int?
+  Certificate    String?
+  Runtime        Int
+  Genre          String[]
+  IMDB_Rating    Decimal          @default(0.00) @db.Decimal(10, 2)
+  M_overview     String?
+  Meta_score     Int?
+  Director       String
+  Star1          String
+  Star2          String
+  Star3          String
+  Star4          String
+  m_voteCount    Int              @default(0)
+  Gross          Int?
+  // relationship to other tables
+  UserLikes      UserLikes[]
+  MovieWatchlist MovieWatchlist[]
+}
+
+model UserLikes {
+  userId  String
+  movieId String
+  likedAt DateTime @default(now())
+  // relation to the other tables
+  user    User     @relation(fields: [userId], references: [id])
+  movie   Movies   @relation(fields: [movieId], references: [MoviesID])
+
+  // Composite primary key
+  @@id([userId, movieId])
+}
+
+model MovieWatchlist {
+  userId  String
+  movieId String // Updated reference field to MoviesID
+  addedAt DateTime @default(now())
+  // relation to other tables
+  user    User     @relation(fields: [userId], references: [id])
+  movie   Movies   @relation(fields: [movieId], references: [MoviesID]) // Updated reference field to MoviesID
+
+  // Composite primary key
+  @@id([userId, movieId])
 }
 
 model Account {
@@ -58,13 +87,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id             String           @id @default(cuid())
+  name           String?
+  email          String?          @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  UserLikes      UserLikes[]
+  MovieWatchlist MovieWatchlist[]
 }
 
 model VerificationToken {
