@@ -12,7 +12,7 @@ export default function WatchList({movies})
   return (
     <Layout>
       <main className="min-h-screen m-auto w-10/12">
-        <div className="p-4 w-10/12 text-white mt-8 m-auto bg-teal-900 opacity-80 rounded-md">
+        <div className="py-9 w-10/12 text-center text-white mt-8 m-auto bg-teal-700  rounded-md">
           <h1 className="text-5xl">{session.user.name}'s watch list 🎥</h1>
         </div>
         {/* {movies.map((movie) => {
