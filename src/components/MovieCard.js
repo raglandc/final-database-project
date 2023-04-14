@@ -1,7 +1,7 @@
-export default function MovieBar({title, rating, overview})
+export default function MovieCard({image, title, rating, overview})
 {
   return (
-    <div className="border rounded-md shadow-sm overflow-hidden m-auto w-10/12 my-2">
+    <div className="border rounded-md shadow-sm overflow-hidden w-full m-auto my-2">
       <div className="flex p-4 bg-teal-900 justify-between">
         <h1 className="text-white text-2xl">{title}</h1>
         <div className="flex items-center">
@@ -11,7 +11,11 @@ export default function MovieBar({title, rating, overview})
           <p className="text-white text-2xl">{rating}</p>
         </div>
       </div>
-        <p className="p-4">{overview}</p>
+        <img
+          alt={title}
+          src={image}
+          className="w-full"
+        />
     </div>
   )
 }
