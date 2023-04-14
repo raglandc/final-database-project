@@ -12,9 +12,10 @@ export default function NavBar()
         </Link>
         <div className="flex items-center h-full">
           <NavLink link="/watch-list" title="Watch List" />
+          <NavLink link="/recently-added" title="Newest" />
           <NavLink link="/search" title="Search" />
-          <button className="px-3 h-full flex items-center rounded-sm hover:border-b-8 hover:border-b-green-500 hover:cursor-pointer" onClick={() => signOut({callbackUrl: "/"})}>Sign out</button>
         </div>
+          <button className="px-3 h-full flex items-center rounded-sm hover:border-b-8 hover:border-b-red-500 hover:cursor-pointer" onClick={() => signOut({callbackUrl: "/"})}>Sign out</button>
       </div>
     </div>
   )
