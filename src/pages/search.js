@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react';
 
 import Layout from '@/components/Layout'
 import SideBar from '@/components/SideBar'
-import MovieBar from '@/components/MovieBar';
+import MovieCard from '@/components/MovieCard';
 import Head from 'next/head'
 import prisma from '../../lib/prisma';
 
@@ -23,16 +23,17 @@ export default function Search({movies}) {
             <aside className='col-span-3 h-full bg-teal-800'>
               <SideBar/>
             </aside>
-            <section className='col-start-4 col-end-13'>
-              <div>
-                {movies.map((movie) => {
-                  return <MovieBar 
+            <section className='col-start-4 col-end-13 mr-4'>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {/* {movies.map((movie) => {
+                  return <MovieCard 
                           key={movie.MoviesID} 
                           title={movie.M_title}
                           overview={movie.M_overview}
                           rating={movie.m_voteAvg}
+                          image={movie.Poster_Link}
                           />
-                })}
+                })} */}
               </div>
             </section>
           </main>
@@ -43,22 +44,5 @@ export default function Search({movies}) {
   else 
   {
     return <p>No user signed in</p>
-  }
-}
-
-export async function getServerSideProps()
-{
-  const movies = await prisma.movies.findMany({
-    orderBy: {
-      
-    },
-    where: {
-      MoviesID: {lte: 4}
-    }
-  });
-  return {
-    props: { 
-      movies: JSON.parse(JSON.stringify(movies)), 
-    }
   }
 }
