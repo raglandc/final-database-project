@@ -38,35 +38,24 @@ model Movies {
 model UserLikes {
   userId  String
   movieId String
-
   likedAt DateTime @default(now())
-  rating  Int?
-  review  String?
-
   // relation to the other tables
-  user  User   @relation(fields: [userId], references: [id])
-  movie Movies @relation(fields: [movieId], references: [MoviesID])
-
+  user    User     @relation(fields: [userId], references: [id])
+  movie   Movies   @relation(fields: [movieId], references: [MoviesID])
   // Composite primary key
   @@id([userId, movieId])
 }
 
 model MovieWatchlist {
-  // watchlist ID allows for different type of watchlist
-  watchlistID String
-  userId      String
-  movieId     String // Updated reference field to MoviesID
-
-  addedAt  DateTime @default(now())
-  watched  Boolean  @default(false)
-  favorite Boolean  @default(false)
-
+  userId  String
+  movieId String // Updated reference field to MoviesID
+  addedAt DateTime @default(now())
   // relation to other tables
-  user  User   @relation(fields: [userId], references: [id])
-  movie Movies @relation(fields: [movieId], references: [MoviesID]) // Updated reference field to MoviesID
+  user    User     @relation(fields: [userId], references: [id])
+  movie   Movies   @relation(fields: [movieId], references: [MoviesID]) // Updated reference field to MoviesID
 
   // Composite primary key
-  @@id([userId, movieId, watchlistID])
+  @@id([userId, movieId])
 }
 
 model Account {
