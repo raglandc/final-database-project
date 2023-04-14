@@ -11,7 +11,9 @@ datasource db {
 }
 
 model Movies {
-  MoviesID       String           @id @unique @default(cuid())
+  // primary key
+  MoviesID String @id @unique @default(cuid())
+
   Poster_Link    String
   M_title        String
   Released_Year  Int?
@@ -28,33 +30,43 @@ model Movies {
   Star4          String
   m_voteCount    Int              @default(0)
   Gross          Int?
+  // relationship to other tables
   UserLikes      UserLikes[]
   MovieWatchlist MovieWatchlist[]
 }
 
 model UserLikes {
-  id      Int      @id @default(sequence())
-  user    User     @relation(fields: [userId], references: [id])
   userId  String
-  movie   Movies   @relation(fields: [movieId], references: [MoviesID])
   movieId String
+
   likedAt DateTime @default(now())
   rating  Int?
   review  String?
+
+  // relation to the other tables
+  user  User   @relation(fields: [userId], references: [id])
+  movie Movies @relation(fields: [movieId], references: [MoviesID])
+
+  // Composite primary key
+  @@id([userId, movieId])
 }
 
 model MovieWatchlist {
-  id            String    @id @default(cuid())
-  user          User      @relation(fields: [userId], references: [id])
-  movie         Movies    @relation(fields: [movieId], references: [MoviesID]) // Updated reference field to MoviesID
-  addedAt       DateTime  @default(now())
-  rating        Int?
-  review        String?
-  watched       Boolean   @default(false)
-  favorite      Boolean   @default(false)
-  lastWatchedAt DateTime?
-  userId        String
-  movieId       String // Updated reference field to MoviesID
+  // watchlist ID allows for different type of watchlist
+  watchlistID String
+  userId      String
+  movieId     String // Updated reference field to MoviesID
+
+  addedAt  DateTime @default(now())
+  watched  Boolean  @default(false)
+  favorite Boolean  @default(false)
+
+  // relation to other tables
+  user  User   @relation(fields: [userId], references: [id])
+  movie Movies @relation(fields: [movieId], references: [MoviesID]) // Updated reference field to MoviesID
+
+  // Composite primary key
+  @@id([userId, movieId, watchlistID])
 }
 
 model Account {
