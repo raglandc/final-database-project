@@ -20,10 +20,10 @@ export default function Search({movies}) {
         </Head>
         <Layout>
           <main className='grid grid-cols-12 gap-4 min-h-screen'>
-            <aside className='col-span-3 h-full bg-teal-800'>
+            <aside className='col-span-3 xl:col-span-2 h-full bg-teal-800'>
               <SideBar/>
             </aside>
-            <section className='col-start-4 col-end-13 mr-4'>
+            <section className='col-start-4 xl:col-start-3 col-end-13 mr-4'>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {/* {movies.map((movie) => {
                   return <MovieCard 
