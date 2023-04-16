@@ -19,9 +19,9 @@ export default function RecentlyAdded({movies})
               return <MovieCard 
                 key={movie.MoviesID} 
                 title={movie.M_title}
-                overview={movie.M_overview}
                 rating={movie.m_voteAvg}
                 image={movie.Poster_Link}
+                movieId={movie.movieId}
                 />
             })}
           </div>

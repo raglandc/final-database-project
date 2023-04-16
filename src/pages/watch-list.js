@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 import Layout from "@/components/Layout";
-import MovieBar from "@/components/MovieCard";
+import MovieCard from "@/components/MovieCard";
 
 export default function WatchList({movies})
 {
@@ -29,3 +29,10 @@ export default function WatchList({movies})
     return <p>Error. No user signed in.</p>
   }
 }
+
+// export default function getServerSideProps()
+// {
+//   const movies = prisma.moviewatchlist.findMany({
+//     where: userID = session.
+//   })
+// }
