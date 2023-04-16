@@ -1,40 +1,43 @@
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-
 import prisma from "../../lib/prisma";
 
-export default function MovieCard({ movieId, title, image })
+export default function MovieCard({ movieId, title, image, session })
 {
-  const { data : session } = useSession();
   const [ isInWatchlist, setIsInWatchlist ] = useState(false);
+  const email = session.user.email;
 
-  useEffect(() => {
-    const fetchWatchlist = async () => {
+  
+  useEffect(() => 
+  {
+    const fetchWatchlist = async () => 
+    {
       if (session)
       {
-        const userId = session.user.id;
-        const result = await prisma.movieWatchlist.findFirst({
-          where: {
-            userId,
-            MovieID: movieId
+        const response = await fetch("/api/get-watchlist", {
+          method: "POST",
+          body: JSON.stringify({email, movieId}),
+          headers: {
+            "Content-Type": "application/json",
           }
         });
-
-        setIsInWatchlist(result !== null);
+        const result = await response.json();
+        console.log(result);
+        setIsInWatchlist(result.isMovieInWatchList != false);
       }
     }
     fetchWatchlist();
-  }, [session]);
-  
-  const watchlistClickHandler = async () => {
-    const userId = session.user.id;
+  }, [session, isInWatchlist]);
+
+  const watchlistClickHandler = async () => 
+  {
     if (isInWatchlist)
     {
       //remove from watch list
-      await prisma.movieWatchlist.deleteMany({
-        where: {
-          userId, 
-          MovieID: movieId,
+      const response = await fetch("/api/remove-from-watchlist", {
+        method: "POST",
+        body: JSON.stringify({email, movieId}),
+        headers: {
+          "Content-Type": "application/json",
         }
       })
       setIsInWatchlist(false);
@@ -42,21 +45,15 @@ export default function MovieCard({ movieId, title, image })
 
     else {
       //add to database
-      await prisma.movieWatchlist.create({
-        data: {
-          userId,
-          MovieID: movieId, 
+      const response = await fetch("/api/add-to-watchlist", {
+        method: "POST",
+        body: JSON.stringify({email, movieId}),
+        headers: {
+          "Content-Type": "application/json",
         }
       })
       setIsInWatchlist(true);
     }
-    // const response = await fetch("/api/set-watchlist.js", {
-    //   method: "POST",
-    //   body: JSON.stringify({userId, movieID}),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   }
-    // });
   } 
 
   return (
@@ -64,10 +61,14 @@ export default function MovieCard({ movieId, title, image })
       <div className="text-white absolute overflow-hidden -top-3 bg-teal-900 rounded-xl -right-2 w-20 flex justify-between">
         <button className="hover:bg-teal-800 w-2/4 px-3 py-2"
                 // onClick={}
-        >❤️</button>
+        >
+          ❤️
+        </button>
         <button className="hover:bg-teal-800 w-2/4 px-3 py-2"
                 onClick={watchlistClickHandler}
-        >+</button>
+        >
+          {isInWatchlist ? '-' : '+'}
+        </button>
       </div>
       <img
         alt={title}

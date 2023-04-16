@@ -17,11 +17,12 @@ export default function RecentlyAdded({movies})
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {movies.map((movie) => {
               return <MovieCard 
+                session={session}
                 key={movie.MoviesID} 
                 title={movie.M_title}
                 rating={movie.m_voteAvg}
                 image={movie.Poster_Link}
-                movieId={movie.movieId}
+                movieId={movie.MoviesID}
                 />
             })}
           </div>
