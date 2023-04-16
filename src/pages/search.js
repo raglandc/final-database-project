@@ -111,6 +111,7 @@ export default function Search() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {movies.length > 0 ? movies.map((movie) => {
                   return <MovieCard 
+                            session={session}
                             key={movie.MoviesID} 
                             title={movie.M_title}
                             rating={movie.m_voteAvg}

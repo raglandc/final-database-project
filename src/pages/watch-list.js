@@ -8,6 +8,10 @@ export default function WatchList({ movies })
 { 
   const { data: session } = useSession()
 
+  useEffect(() => 
+  {
+  }, [movies])
+
   if (session) 
   {
   return (

@@ -26,7 +26,7 @@ export default function MovieCard({ movieId, title, image, session })
       }
     }
     fetchWatchlist();
-  }, [session, isInWatchlist]);
+  }, [session]);
 
   const watchlistClickHandler = async () => 
   {

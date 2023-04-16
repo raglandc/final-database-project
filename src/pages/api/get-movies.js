@@ -30,7 +30,8 @@ export default async function handler(req, res)
     where,
     orderBy: {
       M_title: "asc"
-    }
+    },
+    take: 10
   })
 
   res.json({ movies });
