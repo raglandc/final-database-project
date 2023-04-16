@@ -20,8 +20,6 @@ export default async function handler(req, res)
     }
   })
 
-  console.log(movie);
-
   const isMovieInWatchList = !!movie;
 
   res.status(200).json({ isMovieInWatchList });

@@ -108,14 +108,15 @@ export default function Search() {
             </div>
             </aside>
             <section className='col-start-4 xl:col-start-3 col-end-13 mr-4'>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <div className="grid mt-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {movies.length > 0 ? movies.map((movie) => {
                   return <MovieCard 
                             session={session}
-                            key={movie.MoviesID} 
+                            key={movie.MoviesID}
                             title={movie.M_title}
                             rating={movie.m_voteAvg}
                             image={movie.Poster_Link}
+                            movieId={movie.MoviesID}
                           />
                   }) : <p>No movies found. Try searching something else</p>
                 }

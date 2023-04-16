@@ -21,7 +21,6 @@ export default function MovieCard({ movieId, title, image, session })
           }
         });
         const result = await response.json();
-        console.log(result);
         setIsInWatchlist(result.isMovieInWatchList != false);
       }
     }
