@@ -18,7 +18,7 @@ export default async function handler(req, res)
 
   if (rating != 1.0)
   {
-    where.IMDB_Rating = { gte : rating };
+    where.IMDB_Rating = { lte : rating };
   }
 
   if (genre != "")

@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 import Layout from '@/components/Layout'
 import MovieCard from '@/components/MovieCard';
@@ -31,8 +31,6 @@ export default function Search() {
     setMovies(movies);
   }
 
-  console.log(movies);
-  
   if (session) {
     return (
       <>
