@@ -128,23 +128,25 @@ export default function Search() {
             </div>
             </aside>
             <section className='w-10/12 h-full m-auto col-start-4 xl:col-start-3 col-end-13'>
-              {movies.length > 0 && <p className='my-4 font-bold text-gray-500'>{movieCount} movies found</p>}
+              {movies.length > 0 && <p className='my-4 font-bold text-gray-500'>{(page - 1) * 12} - {page * 12} of the {movieCount} movies found</p>}
               <MovieDisplay 
                 movies={movies}
                 session={session}
                 page={page}
               />
-              <div className='p-4 flex justify-around items-center bg-red-500'>
+              <div className='p-4 flex justify-around items-center'>
                 <button 
                   style={page <= 1 || movies.length == 0 ? {opacity: 0, pointerEvents: "none"} : {opacity: 1}}
+                  className="py-3 px-5 text-white bg-teal-900 hover:bg-teal-700 border-teal-900 rounded-xl"
                   onClick={handlePrev}
                 >
-                    Previous
+                    &larr; Prev
                 </button>
                 <button
                   style={page * 12 < movieCount ? {opacity: 1} : {opacity: 0, pointerEvents: "none"}}
+                  className="py-3 px-5 text-white bg-teal-900 hover:bg-teal-700 border-teal-900 rounded-xl"
                   onClick={handleNext}>
-                    Next
+                    Next &rarr;
                 </button>
               </div>
             </section>

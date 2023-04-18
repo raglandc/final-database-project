@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import prisma from "../../lib/prisma";
 
 export default function MovieCard({ movieId, title, image, session })
 {
