@@ -1,34 +1,52 @@
 import { useSession } from 'next-auth/react';
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from 'next/router';
 
 import Layout from '@/components/Layout'
-import MovieCard from '@/components/MovieCard';
+import MovieDisplay from '@/components/MovieDisplay';
 import Head from 'next/head'
 
 export default function Search() {
   const { data : session } = useSession();
+  const router = useRouter();
 
   //form data
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
   const [genre, setGenre] = useState("");
-  const [rating, setRating] = useState(5.0);
+  const [rating, setRating] = useState(10.0);
+
+  //page changing props
   const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const handleSubmit = async (event) => {
+  //constant
+  const PER_PAGE = 12;
+
+  //API route req handler
+  async function handleSubmit(event)
+  {
     event.preventDefault();
-
-    const response = await fetch("/api/get-movies", {
+    
+    const response = await fetch(`/api/get-movies?page=${page}`, {
       method: "POST",
-      body: JSON.stringify({title, year, rating, genre}),
+      body: JSON.stringify({title, year, rating, genre, page, PER_PAGE}),
       headers: {
         "Content-Type": "application/json",
       }
     })
-
+    
     const { movies } = await response.json();
-    console.log(movies);
     setMovies(movies);
+  }
+
+  //pagination button handlers
+  function handlePrevPage() {
+    setPage((prevPage) => Math.max(prevPage - 1, 0));
+  }
+
+  function handleNextPage() {
+    setPage((prevPage) => prevPage + 1);
   }
 
   if (session) {
@@ -105,19 +123,25 @@ export default function Search() {
               </form>
             </div>
             </aside>
-            <section className='col-start-4 xl:col-start-3 col-end-13 mr-4'>
-              <div className="grid mt-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {movies.length > 0 ? movies.map((movie) => {
-                  return <MovieCard 
-                            session={session}
-                            key={movie.MoviesID}
-                            title={movie.M_title}
-                            rating={movie.m_voteAvg}
-                            image={movie.Poster_Link}
-                            movieId={movie.MoviesID}
-                          />
-                  }) : <p>No movies found. Try searching something else</p>
-                }
+            <section className='w-10/12 h-full m-auto col-start-4 xl:col-start-3 col-end-13'>
+              {movies.length > 0 && <p className='my-4 font-bold text-gray-500'>{movies.length} movies found</p>}
+              <MovieDisplay 
+                movies={movies}
+                session={session}
+                page={page}
+              />
+              <div className='p-4 flex justify-around items-center bg-red-500'>
+                <button 
+                  style={page <= 0 || movies.length == 0 ? {opacity: 0} : {opacity: 1}}
+                  onClick={handlePrevPage}
+                >
+                    Previous
+                </button>
+                <button
+                  style={movies.length === 12 ? {opacity: 1} : {opacity: 0}}
+                  onClick={handleNextPage}>
+                    Next
+                </button>
               </div>
             </section>
           </main>
