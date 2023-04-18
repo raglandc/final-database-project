@@ -13,7 +13,10 @@ export default function RecentlyAdded({movies})
     return (
       <Layout>
         <main className='min-h-screen w-8/12 m-auto xl:w-5/12 my-20 pb-80'>
-          <h1 className='text-6xl font-bold my-6'>Recently Added</h1>
+          <div className='my-6'>
+            <h1 className='text-6xl text-teal-800 font-bold'>Recently Added</h1>
+            <p className='text-3xl text-gray-500 font-bold my-3'>Checkout our 12 newest movies</p>
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {movies.map((movie) => {
               return <MovieCard 
@@ -43,7 +46,7 @@ export async function getServerSideProps()
       { Released_Year: 'desc' },
       { IMDB_Rating: 'desc' },
     ],
-    take: 10
+    take: 12
   });
   return {
     props: { 

@@ -12,7 +12,7 @@ export default function WatchList({ movies })
   {
   return (
     <Layout>
-      <main className="min-h-screen m-auto w-10/12">
+      <main className="min-h-screen w-8/12 m-auto xl:w-5/12 my-20 pb-80">
         <div className="py-9 w-10/12 text-center text-white mt-8 m-auto bg-teal-700  rounded-md">
           <h1 className="text-5xl">{session.user.name}'s watch list 🎥</h1>
         </div>

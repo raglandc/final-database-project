@@ -31,7 +31,7 @@ export default async function handler(req, res)
     orderBy: {
       M_title: "asc"
     },
-    take: 10
+    take: 12
   })
 
   res.json({ movies });
