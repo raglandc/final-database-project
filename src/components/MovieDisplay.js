@@ -3,9 +3,9 @@ import { useEffect } from "react"
 
 export default function MovieDisplay({movies, session, page})
 {
-  useEffect(() => 
-  {
-  }, [page, movies])
+  useEffect(() => {}, [page])
+
+  console.log(`Movie display page: ${page}`);
 
   return ( 
     <div className="grid mt-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">

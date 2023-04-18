@@ -4,6 +4,8 @@ export default async function handler(req, res)
 {
   const { title, year, rating, genre, page, PER_PAGE } = req.body;
 
+  const pageNumber = parseInt(page - 1);
+
   const where = {};
 
   if (title != "")
@@ -29,12 +31,16 @@ export default async function handler(req, res)
   const movies = await prisma.movies.findMany({
     where,
     take: PER_PAGE,
-    skip: parseInt((page - 1) * PER_PAGE),
+    skip: pageNumber * PER_PAGE,
     orderBy: {
       M_title: "asc"
     },
 
   })
 
-  res.status(200).json({ movies });
+  const movieCount = await prisma.movies.count({
+    where,
+  })
+
+  res.status(200).json({ movies, movieCount });
 }
