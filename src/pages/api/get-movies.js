@@ -2,9 +2,7 @@ import prisma from "../../../lib/prisma";
 
 export default async function handler(req, res)
 {
-  const { title, year, rating, genre, page, PER_PAGE } = req.body;
-
-  const pageNumber = parseInt(page - 1);
+  const { title, year, rating, genre } = req.body;
 
   const where = {};
 
@@ -30,8 +28,6 @@ export default async function handler(req, res)
 
   const movies = await prisma.movies.findMany({
     where,
-    take: PER_PAGE,
-    skip: pageNumber * PER_PAGE,
     orderBy: {
       M_title: "asc"
     },

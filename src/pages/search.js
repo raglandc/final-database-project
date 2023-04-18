@@ -21,17 +21,14 @@ export default function Search() {
   const [movieCount, setMovieCount] = useState(0);
   const [page, setPage] = useState(1);
 
-  //constant
-  const PER_PAGE = 12;
-
   //API route req handler
   async function handleSubmit(e)
   {
-    setPage(prevPage => 1);
     e.preventDefault();
+    setPage(1)
     const response = await fetch(`/api/get-movies`, {
       method: "POST",
-      body: JSON.stringify({title, year, rating, genre, page, PER_PAGE}),
+      body: JSON.stringify({title, year, rating, genre}),
       headers: {
         "Content-Type": "application/json",
       }
@@ -43,35 +40,15 @@ export default function Search() {
   }
 
   //prev page
-  async function handlePrev()
+  function handlePrev()
   {
     setPage(prevPage => Math.max(prevPage - 1, 1));
-    const response = await fetch(`/api/get-movies`, {
-      method: "POST",
-      body: JSON.stringify({title, year, rating, genre, page, PER_PAGE}),
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-    setMovies([]);
-    const { movies } = await response.json();
-    setMovies(movies); 
   }
 
   //next page
-  async function handleNext()
+  function handleNext()
   {
-    setPage(prevPage => prevPage + 1);
-    const response = await fetch(`/api/get-movies`, {
-      method: "POST",
-      body: JSON.stringify({title, year, rating, genre, page, PER_PAGE}),
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-    setMovies([]);
-    const { movies } = await response.json();
-    setMovies(movies); 
+    setPage(prevPage => prevPage + 1)
   }
 
   console.log(page);
@@ -165,7 +142,7 @@ export default function Search() {
                     Previous
                 </button>
                 <button
-                  style={movies.length === 12 ? {opacity: 1} : {opacity: 0, pointerEvents: "none"}}
+                  style={page * 12 < movieCount ? {opacity: 1} : {opacity: 0, pointerEvents: "none"}}
                   onClick={handleNext}>
                     Next
                 </button>
