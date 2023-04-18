@@ -137,14 +137,14 @@ export default function Search() {
               <div className='p-4 flex justify-around items-center'>
                 <button 
                   style={page <= 1 || movies.length == 0 ? {opacity: 0, pointerEvents: "none"} : {opacity: 1}}
-                  className="py-3 px-5 text-white bg-teal-900 hover:bg-teal-700 border-teal-900 rounded-xl"
+                  className="py-3 px-5 border border-1 hover:bg-teal-900/50 border-teal-900 rounded-xl"
                   onClick={handlePrev}
                 >
                     &larr; Prev
                 </button>
                 <button
                   style={page * 12 < movieCount ? {opacity: 1} : {opacity: 0, pointerEvents: "none"}}
-                  className="py-3 px-5 text-white bg-teal-900 hover:bg-teal-700 border-teal-900 rounded-xl"
+                  className="py-3 px-5 border border-1 hover:bg-teal-900/50 border-teal-900 rounded-xl"
                   onClick={handleNext}>
                     Next &rarr;
                 </button>
