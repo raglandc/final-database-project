@@ -12,20 +12,20 @@ export default async function handler(req, res)
         email: email
       }
     })
-
+  
     const userId = user.id;
-
-    await prisma.movieWatchlist.delete({
+  
+    await prisma.userLikes.delete({
       where: {
         userId_movieId: { userId, movieId }
       }
     })
 
-    res.status(200).json({message: "Successfully removed from watchlist"});
+    res.status(200).json({message: "Successfully removed from favorites"});
   }
   catch (error)
   {
     console.error(error);
-    res.status(500).json({error: "Failed to remove from watchlist"})
+    res.status(500).json({ error: "Failed to remove favorites"})
   }
 }

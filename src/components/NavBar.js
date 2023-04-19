@@ -11,6 +11,7 @@ export default function NavBar()
             Bulls🍿Movies
         </Link>
         <div className="flex items-center h-full">
+          <NavLink link="/favorites" title="Favorites" />
           <NavLink link="/watch-list" title="Watch List" />
           <NavLink link="/recently-added" title="Newest" />
           <NavLink link="/search" title="Search" />

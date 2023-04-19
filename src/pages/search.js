@@ -1,6 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from "react"
-import { useRouter } from 'next/router';
+import { useState } from "react"
 
 import Layout from '@/components/Layout'
 import MovieDisplay from '@/components/MovieDisplay';
@@ -8,7 +7,6 @@ import Head from 'next/head'
 
 export default function Search() {
   const { data : session } = useSession();
-  const router = useRouter();
 
   //form data
   const [title, setTitle] = useState("");
@@ -28,13 +26,14 @@ export default function Search() {
     setPage(1)
     const response = await fetch(`/api/get-movies`, {
       method: "POST",
-      body: JSON.stringify({title, year, rating, genre}),
+      body: JSON.stringify({ title, year, rating, genre }),
       headers: {
         "Content-Type": "application/json",
       }
     })
-    
+
     const { movies, movieCount } = await response.json();
+
     setMovieCount(movieCount);
     setMovies(movies);
   }
@@ -100,6 +99,7 @@ export default function Search() {
                   
                   className="my-1 bg-transparent hover:cursor-pointer border-b-4 p-3 rounded-sm hover:border-green-600"
                 >
+                  <option value="">--Select--</option>
                   <option value="Action">Action</option>
                   <option value="Adventure">Adventure</option>
                   <option value="Animation">Animation</option>
