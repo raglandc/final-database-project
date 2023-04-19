@@ -115,7 +115,7 @@ export default function MovieCard({ movieId, title, image, session })
         <button className="hover:bg-teal-800 w-2/4 px-3 py-2"
                 onClick={watchlistClickHandler}
         >
-          {isInWatchlist ? "+" : "-"}
+          {isInWatchlist ? "-" : "+"}
         </button>
       </div>
       <img
