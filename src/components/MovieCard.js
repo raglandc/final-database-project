@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function MovieCard({ movieId, title, image, session })
@@ -102,18 +103,21 @@ export default function MovieCard({ movieId, title, image, session })
   } 
 
   return (
-    <div className="relative rounded-md shadow-sm w-full min-h-96 m-auto my-2">
+    <Link href={`/movies/${movieId}`} className="relative hover:scale-105 active:scale-100 cursor-pointer rounded-md shadow-sm w-full min-h-96 m-auto my-1">
       <div
-        className="text-white absolute overflow-hidden -top-3 bg-teal-900 rounded-xl -right-2 w-20 flex justify-between">
+        className="text-white absolute overflow-hidden -top-3 bg-teal-900 rounded-xl -right-2 w-20 flex z-10 justify-between">
         <button 
+            title="add/remove from favorites"
             style={isFavorite ? {backgroundColor: '#f87171'} : {}}
             className="hover:bg-teal-800 w-2/4 px-3 py-2"
             onClick={likeClickHandler}
         >
           ❤️
         </button>
-        <button className="hover:bg-teal-800 w-2/4 px-3 py-2"
-                onClick={watchlistClickHandler}
+        <button 
+          title="add/remove from watchlist"
+          className="hover:bg-teal-800 w-2/4 px-3 py-2"
+          onClick={watchlistClickHandler}
         >
           {isInWatchlist ? "-" : "+"}
         </button>
@@ -121,11 +125,11 @@ export default function MovieCard({ movieId, title, image, session })
       <img
         alt={title}
         src={image}
-        className="w-full h-10/12"
+        className="w-full h-full"
       />
-      <div className="w-full p-4 bg-teal-900 h-2/12">
-        <p className="text-white py-2">{title.length > 18 ? title.slice(0, 18) + "..." : title}</p>
+      <div className="w-full p-4 absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black/50 h-full">
+        <p className="text-white text-xl font-bold">{title.length > 18 ? title.slice(0, 18) + "..." : title}</p>
       </div>
-    </div>
+    </Link>
   )
 }

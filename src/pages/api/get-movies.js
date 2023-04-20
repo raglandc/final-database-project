@@ -18,7 +18,7 @@ export default async function handler(req, res)
 
     if (rating != 1.0)
     {
-      where.IMDB_Rating = { lte : rating };
+      where.IMDB_Rating = { gte : rating };
     }
 
     if (genre != "")
@@ -44,6 +44,6 @@ export default async function handler(req, res)
   {
     console.error(error);
 
-    return res.status(500).json({error: "failed to get movies"});
+    return res.status(500).json({error: "Failed to get movies"});
   }
 }
