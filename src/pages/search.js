@@ -12,7 +12,7 @@ export default function Search() {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
   const [genre, setGenre] = useState("");
-  const [rating, setRating] = useState(10.0);
+  const [rating, setRating] = useState(1.0);
 
   //page changing props
   const [movies, setMovies] = useState([]);
@@ -111,7 +111,7 @@ export default function Search() {
                   <option value="War">War</option>
                 </select>
 
-                <label className="mt-1" htmlFor="rating">Rating: {rating}</label>
+                <label className="mt-1" htmlFor="rating">Rating &gt;= {rating}</label>
                 <input
                   className='my-3'
                   id='rating'

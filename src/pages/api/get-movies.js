@@ -23,7 +23,7 @@ export default async function handler(req, res)
 
     if (genre != "")
     {
-      where.Genre = { in : [ genre ] };
+      where.Genre = { has : genre };
     }
 
     const movies = await prisma.movies.findMany({
