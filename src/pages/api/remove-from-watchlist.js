@@ -15,6 +15,7 @@ export default async function handler(req, res)
 
     const userId = user.id;
 
+    //delete the associated element from the table
     await prisma.movieWatchlist.delete({
       where: {
         userId_movieId: { userId, movieId }

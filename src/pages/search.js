@@ -91,7 +91,7 @@ export default function Search() {
                   className="my-1 bg-transparent hover:cursor-pointer border-b-4 p-3 rounded-sm hover:border-green-600"
                 />
 
-                <label htmlFor="Genre" className="mt-1 ">Genre</label>
+                <label htmlFor="genre" className="mt-1 ">Genre</label>
                 <select
                   value={genre}
                   onChange={(e) => setGenre(e.target.value)}

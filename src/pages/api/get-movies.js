@@ -6,8 +6,6 @@ export default async function handler(req, res)
     const { title, year, rating, genre } = req.body;
     const where = {};
 
-    console.log(typeof(genre));
-
     if (title != "")
     {
       where.M_title = { contains: title };
