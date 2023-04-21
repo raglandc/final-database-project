@@ -108,6 +108,7 @@ export default function Search() {
                   <option value="Family">Family</option>
                   <option value="Mystery">Mystery</option>
                   <option value="Thriller">Thriller</option>
+                  <option value="Romance">Romance</option>
                   <option value="War">War</option>
                 </select>
 

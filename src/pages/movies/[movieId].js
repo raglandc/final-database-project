@@ -9,14 +9,16 @@ export default function MovieDetailsPage({ movie }) {
 
   return (
     <Layout>
-      <main className='m-auto w-10/12 min-h-screen'>
+      <main className='m-auto w-10/12 xl:w-7/12 min-h-screen'>
         <div className='flex p-5 justify-around items-center'>
           <div>
             <h1 className='text-3xl mb-3'>{movie.M_title}</h1>
+            <p><strong>Released:</strong> {movie.Released_Year}</p>
             <p><strong>Director:</strong> {movie.Director}</p>
-            <p><strong>Genre:</strong> {movie.Genre}</p>
+            <p><strong>Genre(s):</strong> {movie.Genre}</p>
             <p><strong>Duration:</strong> {movie.Runtime} minutes</p>
             <p><strong>Rating:</strong> {movie.IMDB_Rating}</p>
+            <p><strong>Starring:</strong> {movie.Star1}, {movie.Star2}, {movie.Star3}, {movie.Star4}</p>
           </div>
           <img 
             className='h-80'
@@ -24,7 +26,7 @@ export default function MovieDetailsPage({ movie }) {
             alt="movie cover image"
           />
         </div>
-        <div className='px-5'>
+        <div className='px-5 m-auto xl:w-8/12'>
           <strong>Overview:</strong>
           <p>{movie.M_overview}</p>
         </div>

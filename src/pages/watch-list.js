@@ -38,7 +38,19 @@ export default function WatchListPage({ movies })
 
 export async function getServerSideProps(context)
 {
+  //if user is not logged in
+  //redirect to login
   const session = await getSession(context);
+  if (!session)
+  {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
+  }
+
 
   //get user information
   const user = await prisma.user.findUnique({

@@ -39,8 +39,21 @@ export default function RecentlyAdded({movies})
   }
 }
 
-export async function getServerSideProps()
+export async function getServerSideProps(context)
 {
+  //if user is not logged in
+  //redirect to login
+  const session = await getSession(context);
+  if (!session)
+  {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
+  }
+
   const movies = await prisma.movies.findMany({
     orderBy: [
       { Released_Year: 'desc' },

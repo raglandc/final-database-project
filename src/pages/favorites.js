@@ -2,10 +2,12 @@ import { useSession, getSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 import Layout from "@/components/Layout";
 import MovieCard from "@/components/MovieCard";
+import { useRouter } from "next/router";
 
 export default function FavoritesPage({ movies })
 { 
   const { data: session } = useSession()
+  const router = useRouter();
 
   if (session) 
   {
@@ -38,7 +40,19 @@ export default function FavoritesPage({ movies })
 
 export async function getServerSideProps(context)
 {
+  //if user is not logged in
+  //redirect to login
   const session = await getSession(context);
+  if (!session)
+  {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
+  }
+
 
   //get user information
   const user = await prisma.user.findUnique({
