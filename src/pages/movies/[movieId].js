@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/react";
 import { useRouter } from 'next/router';
 
 import prisma from '../../../lib/prisma';
@@ -35,7 +36,21 @@ export default function MovieDetailsPage({ movie }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context)
+{
+  //if user is not logged in
+  //redirect to login
+  const session = await getSession(context);
+  if (!session)
+  {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
+  }
+
   const { movieId } = context.query;
   const movie = await prisma.movies.findUnique({
     where: {

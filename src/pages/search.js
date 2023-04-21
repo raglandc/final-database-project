@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { useSession, getSession } from "next-auth/react";
 import { useState } from "react"
 
 import Layout from '@/components/Layout'
@@ -159,5 +159,25 @@ export default function Search() {
   else 
   {
     return <p>No user signed in</p>
+  }
+}
+
+export async function getServerSideProps(context)
+{
+  //if user is not logged in
+  //redirect to login
+  const session = await getSession(context);
+  if (!session)
+  {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {}
   }
 }

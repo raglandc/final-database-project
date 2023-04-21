@@ -1,5 +1,4 @@
-import { useSession } from 'next-auth/react';
-
+import { useSession, getSession } from "next-auth/react";
 import prisma from '../../lib/prisma';
 import MovieCard from '@/components/MovieCard';
 import Layout from '@/components/Layout';
