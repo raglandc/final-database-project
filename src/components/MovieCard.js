@@ -103,7 +103,7 @@ export default function MovieCard({ movieId, title, image, session })
   } 
 
   return (
-    <Link href={`/movies/${movieId}`} className="relative hover:scale-105 active:scale-100 cursor-pointer rounded-md shadow-sm w-full min-h-96 m-auto my-1">
+    <div className="relative rounded-md shadow-sm w-full min-h-96 m-auto my-1">
       <div
         className="text-white absolute overflow-hidden -top-3 bg-teal-900 rounded-xl -right-2 w-20 flex z-10 justify-between">
         <button 
@@ -127,9 +127,10 @@ export default function MovieCard({ movieId, title, image, session })
         src={image}
         className="w-full h-full"
       />
-      <div className="w-full p-4 absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black/50 h-full">
-        <p className="text-white text-xl font-bold">{title.length > 18 ? title.slice(0, 18) + "..." : title}</p>
+      <div className=" text-white w-full flex-col p-4 absolute top-0 left-0 right-0 bottom-0 flex justify-around items-center bg-black/50 h-full">
+        <p className="text-xl font-bold">{title.length > 18 ? title.slice(0, 18) + "..." : title}</p>
+        <Link href={`/movies/${movieId}`} className="hover:underline">Learn More</Link>
       </div>
-    </Link>
+    </div>
   )
 }
