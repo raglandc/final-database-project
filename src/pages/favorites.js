@@ -52,27 +52,21 @@ export async function getServerSideProps(context)
       }
     }
   }
-
-
   //get user information
   const user = await prisma.user.findUnique({
     where : {
       email: session.user.email
     }
   })
-
   const userId = user.id;
-  
   //get watchlist information
   const moviesFromFavorites = await prisma.userLikes.findMany({
     where: { 
       userId: userId,
     },
   })
-
   // Get movie information
   const movieIds = moviesFromFavorites.map((movie) => movie.movieId)
-
   const movies = await prisma.movies.findMany({
     where: {
       MoviesID: {
@@ -80,7 +74,6 @@ export async function getServerSideProps(context)
       },
     },
   })
-
   return {
     props: {
       movies: JSON.parse(JSON.stringify(movies)),

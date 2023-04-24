@@ -114,7 +114,7 @@ export default function Search() {
 
                 <label className="mt-1" htmlFor="rating">Rating &gt;= {rating}</label>
                 <input
-                  className='my-3'
+                  className='my-3 text-black'
                   id='rating'
                   type="range"
                   min="1.0"
