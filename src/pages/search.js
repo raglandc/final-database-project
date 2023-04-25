@@ -77,7 +77,7 @@ export default function Search() {
                   value={title} onChange={(e) => setTitle(e.target.value)}
                   type="text" 
                   id="title" 
-                  placeholder="Title is case sensitive" 
+                  placeholder="Title (case sensitive)" 
                   className="bg-transparent text-white border-b-4 my-1 p-3 rounded-sm hover:border-green-600 hover:cursor-pointer"
                 />
 
