@@ -61,3 +61,10 @@ export async function getServerSideProps(context)
     props: { movie : JSON.parse(JSON.stringify(movie)) }
   };
 }
+
+
+
+
+
+
+

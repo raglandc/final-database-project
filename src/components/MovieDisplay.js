@@ -10,8 +10,6 @@ export default function MovieDisplay({movies, session, page})
 
   const moviesToShow = movies.slice(startIndex, endIndex);
 
-  console.log(`Movie display page: ${page}`);
-
   return ( 
     <div className="grid mt-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {movies.length > 0 ? moviesToShow.map((movie) => {
