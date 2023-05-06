@@ -50,8 +50,6 @@ export default function Search() {
     setPage(prevPage => prevPage + 1)
   }
 
-  console.log(page);
-
   if (session) {
     return (
       <>
