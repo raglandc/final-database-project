@@ -18,9 +18,9 @@ All team members agreed on creating a small movie database that allows the follo
 
 Below is the document containing information pertaining to the project structure and design including entity-relationship-diagrams. 
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 
