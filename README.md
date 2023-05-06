@@ -1,6 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Database Design Final Project
+
+This is the submitted project for our (Pedro Bautista, Christiana Hellenbrand, Christopher Ragland) Database Design course at the University of South Florida. 
+
+## Project Description
+
+We are tasked with building a full-stack application that incorporates a user interface and processes for connecting to, retrieving from, and making changes to a relational database. 
+
+All team members agreed on creating a small movie database that allows the following features:
+  - create a user profile
+  - users can search movies that are present in the database
+  - users are able to add movies to their personal "Watchlist" as well as "Favorites"
+  - users are able to remove moves from their personal "Watchlist" as well as "Favorites"
+  
+  more information can be found inside the project documentation.
+
+## Documentation
+
+Below is the document containing information pertaining to the project structure and design including entity-relationship-diagrams. 
 
 ## Getting Started
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 
