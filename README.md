@@ -16,7 +16,7 @@ All team members agreed on creating a small movie database that allows the follo
 
 ## Documentation
 
-Below is the document containing information pertaining to the project structure and design including entity-relationship-diagrams. 
+Above is the document containing information pertaining to the project structure and design including entity-relationship-diagrams in a document titled, "Project 4 Final Report.pdf". 
 
 ## Getting Started
 
